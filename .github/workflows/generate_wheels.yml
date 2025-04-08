@@ -45,9 +45,10 @@ jobs:
                 chmod a+x ./setup.sh
                 ./setup.sh
                 pip install -U build
-                python -m build
+                python build.py sdist bdist_wheel
             
             - name: Upload Artifact
               uses: actions/upload-artifact@v4
               with:
                 path: dist/*
+                overwrite: true

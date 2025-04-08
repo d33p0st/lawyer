@@ -19,8 +19,13 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
-[tool.setuptools.package-data]
-lawyer = ["*"]
 
 [tool.setuptools]
 packages = {find = {where = ["src"]}}
+include-package-data = true
+
+[tool.setuptools.package-data]
+lawyer = ["*.so", "*.pyd", "*.dylib"]
+
+[tool.bdist_wheel]
+universal = false

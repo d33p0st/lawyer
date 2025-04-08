@@ -44,7 +44,7 @@ jobs:
               run: |
                 chmod a+x ./setup.sh
                 ./setup.sh
-                pip install -U build
+                pip install -U build wheel 'setuptools>=75.0'
                 python build.py sdist bdist_wheel
             
             - name: Upload Artifact

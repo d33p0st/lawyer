@@ -220,7 +220,7 @@ class singlet(typing.Generic[default]):
         
         if default is ... and self.capture_type is 'boolean':
             self.default = False
-        elif default is not ... and self.capture_type is 'boolean':
+        elif (default is not ... and self.capture_type is 'boolean') or default is not ...:
             self.default = default
 
         self.required = required

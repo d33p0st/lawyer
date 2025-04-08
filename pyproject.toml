@@ -10,8 +10,10 @@ requires-python = ">=3.8"
 authors = [{name = "Soumyo Deep Gupta", email="deep@d33p0st.in"}]
 maintainers = [{name = "Soumyo Deep Gupta", email="deep@d33p0st.in"}]
 dependencies = ['colorama']
-license = "MIT"
-readme = "README.md"
+license = { file = "LICENSE" }
+readme = {content-type = "text/markdown", file = "README.md"}
+# readme = "README.md"
+# license = "MIT"
 classifiers = [
     "Development Status :: 4 - Beta",
     "Operating System :: OS Independent",

@@ -347,9 +347,7 @@ class singlet(typing.Generic[default]):
 
         if self.required and not self.__present__ and not hasattr(
                 self, 'default') and raise_error:
-            raise ArgumentError(
-                f"Any one of {
-                    self.notations} is a mandatory argument in this context!")
+            raise ArgumentError(f"Any one of {self.notations} is a mandatory argument in this context!")
 
 
     # The __usage__ property returns only the usage of this particular argument in string

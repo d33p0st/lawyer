@@ -295,6 +295,8 @@ class Judge:
         setattr(self, '-4799753283422340294', reference[skip:])
         setattr(self, '-1473320931206488208', auto_help)
         setattr(self, '8587656167592366246', help_notations or ('--help', '-h'))
+        setattr(self, '-7868989330756850304', {})
+
 
         _modify = False
 

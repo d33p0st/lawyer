@@ -473,8 +473,7 @@ class singlet(typing.Generic[default]):
                         raise ParseError(
                             f"a reference is required for parsing capture-type='auto'.")
                 values = self.reference[self.__index__ +
-                                        1: min(self.__indices_of_reference__(*
-                                                                             reference, self.__index__), default=len(self.reference))]
+                                        1: min(self.__indices_of_reference__(*reference, index_to_check=self.__index__), default=len(self.reference))]
                 if values:
                     if isinstance(values, typing.Iterable) and not isinstance(
                             values, str):

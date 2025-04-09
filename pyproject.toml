@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "lawyer"
 version = "1.6.0"
 description = "A redefined argument parser designed for ease of use."
-requires-python = ">=3.13"
+requires-python = ">=3.11"
 authors = [{name = "Soumyo Deep Gupta", email="deep@d33p0st.in"}]
 maintainers = [{name = "Soumyo Deep Gupta", email="deep@d33p0st.in"}]
 dependencies = ['colorama']
@@ -22,7 +22,7 @@ classifiers = [
 
 [tool.setuptools]
 packages = {find = {where = ["src"]}}
-include-package-data = true
+# include-package-data = true
 
 [tool.setuptools.package-data]
 lawyer = ["*.so", "*.pyd", "*.dylib"]
@@ -30,5 +30,5 @@ lawyer = ["*.so", "*.pyd", "*.dylib"]
 # [tool.bdist_wheel]
 # universal = false
 
-[tool.wheel]
-pure-lib = false
+# [tool.wheel]
+# pure-lib = false

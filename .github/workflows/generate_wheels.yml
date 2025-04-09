@@ -47,7 +47,9 @@ jobs:
             - name: Upload Artifact
               uses: actions/upload-artifact@v4
               with:
-                path: src/lawyer/*.so
+                path: |
+                    src/lawyer/*.so
+                    src/lawyer/*.pyd
                 name: artifact-${{ matrix.python-version }}-${{ matrix.os }}
     
     merge:

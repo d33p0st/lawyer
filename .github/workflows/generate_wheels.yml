@@ -42,8 +42,7 @@ jobs:
             
             - name: Build Artifact
               run: |
-                chmod a+x ./setup.sh
-                ./setup.sh
+                python setup.py
             
             - name: Upload Artifact
               uses: actions/upload-artifact@v4

@@ -1,4 +1,10 @@
 from setuptools import setup, find_packages
+from wheel.bdist_wheel import bdist_wheel
+
+class BdistWheelCustom(bdist_wheel):
+    def finalize_options(self):
+        bdist_wheel.finalize_options(self)
+        self.root_is_pure = False
 
 setup(
     packages=find_packages(where="src"),
@@ -11,5 +17,8 @@ setup(
             "universal": False,
             "py_limited_api": False,
         }
+    },
+    cmdclass={
+        'bdist_wheel': BdistWheelCustom,
     },
 )

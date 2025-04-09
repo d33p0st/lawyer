@@ -15,7 +15,11 @@ def minimal_traceback(exception: typing.Type[Exception], *args: object) -> typin
         tb_list = traceback.extract_tb(exc_tb)
 
         # Get the outermost user-call frame (first frame in the traceback)
-        user_frame = tb_list[0]  # index 0 = where error was triggered in user code
+        # user_frame = tb_list[1]  # index 0 = where error was triggered in user code
+        if len(tb_list) >= 2:
+            user_frame = tb_list[1]
+        else:
+            user_frame = tb_list[0]
 
         # Print traceback header
         print("Traceback (most recent call last):")

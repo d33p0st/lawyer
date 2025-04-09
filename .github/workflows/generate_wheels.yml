@@ -50,5 +50,5 @@ jobs:
             - name: Upload Artifact
               uses: actions/upload-artifact@v4
               with:
-                path: dist/*
-                name: artifact-${{ matrix.python-version }}-${{ matrix.os }}
+                path: dist/*.whl
+                # name: artifact-${{ matrix.python-version }}-${{ matrix.os }}

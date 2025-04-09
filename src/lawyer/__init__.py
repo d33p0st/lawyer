@@ -1,7 +1,7 @@
 
 from lawyer.parsers import singlet, singlets
 from lawyer.exceptions import InstanceError, ParameterError, ExistsError, ArgumentError, ParseError
-import sys, typing, traceback, linecache
+import sys, typing, traceback, linecache, shutil
 
 
 _modify = False
@@ -297,7 +297,6 @@ class Judge:
         setattr(self, '8587656167592366246', help_notations or ('--help', '-h'))
         setattr(self, '-7868989330756850304', {})
 
-
         _modify = False
 
 
@@ -396,6 +395,8 @@ class Judge:
 
 
     def parse(self, *order):
+        if self.__autohelp__ and self.__help_notations__ and self.__reference__ and self.__reference__[0] in self.__help_notations__:
+            self.show_helptext(exit=True)
         if order:
 
             values = []
@@ -435,3 +436,57 @@ class Judge:
                 else:
                     values[item] = item_object.__parse__(self.__collection__.values())
             return values
+
+
+    def _get_full_usage_of_singlets_object(self, obj):
+        usage = ''
+        for name, _obj in obj.items():
+            if isinstance(_obj, singlet):
+                usage += _obj.__usage__
+            else:
+                self._get_full_usage_of_singlets_object(_obj)
+        return usage
+
+
+    def show_helptext(self, exit, exit_code=0) -> typing.NoReturn:
+        usage = []
+        string = ''
+        terminal_width = shutil.get_terminal_size().columns - 10 - len(self.__application__) - 1
+
+        for _, _object in self.__collection__.items():
+            if isinstance(_object, singlet):
+                _local_usage = _object.__usage__
+                if len(string + _local_usage) > terminal_width:
+                    usage.append(string)
+                    string = _local_usage
+                else:
+                    string += _local_usage
+            else:
+                _local_usage = self._get_full_usage_of_singlets_object(_object)
+                if len(string + _local_usage) > terminal_width:
+                    usage.append(string)
+                    string = _local_usage
+                else:
+                    string += _local_usage
+
+        usage.append(string)
+
+        
+        print(f"\n{self.__application__} v{self.__version__}")
+        print(f"{self.__description__}\n")
+
+        if usage:
+            print(f"usage:".ljust(9), self.__application__, usage[0])
+            for line in usage[1:]:
+                print(''.ljust(10 + len(self.__application__)), line)
+
+
+        # FIX THIS IN LATER VERSIONS
+
+        for _, _object in self.__collection__.items():
+            _object.help_notations = ()
+            _object.__helptext__(exit=False, acknowledgement=False, usage=False)
+            _object.help_notations = self.__help_notations__
+
+        if exit:
+            sys.exit(exit_code)

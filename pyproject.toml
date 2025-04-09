@@ -27,5 +27,8 @@ include-package-data = true
 [tool.setuptools.package-data]
 lawyer = ["*.so", "*.pyd", "*.dylib"]
 
-[tool.bdist_wheel]
-universal = false
+# [tool.bdist_wheel]
+# universal = false
+
+[tool.wheel]
+pure-lib = false

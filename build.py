@@ -1,11 +1,15 @@
-from setuptools import setup, Extension
-
-# This dummy extension will force a binary wheel
-dummy_ext = Extension(
-    'lawyer._dummy',
-    sources=['src/lawyer/dummy.c'],
-)
+from setuptools import setup, find_packages
 
 setup(
-    ext_modules=[dummy_ext],
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
+    package_data={"lawyer": ["*.so", "*.pyd", "*.dylib"]},
+    include_package_data=True,
+    # Forces platform-specific wheel
+    options={
+        "bdist_wheel": {
+            "universal": False,
+            "py_limited_api": False,
+        }
+    },
 )

@@ -44,14 +44,11 @@ jobs:
               run: |
                 chmod a+x ./setup.sh
                 ./setup.sh
-                python -m pip install -U pip
-                pip install -U build wheel 'setuptools>=75.0'
-                python build.py bdist_wheel
             
             - name: Upload Artifact
               uses: actions/upload-artifact@v4
               with:
-                path: dist/*.whl
+                path: src/lawyer/*.so
                 name: artifact-${{ matrix.python-version }}-${{ matrix.os }}
     
     merge:

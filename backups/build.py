@@ -1,11 +1,26 @@
-from setuptools import setup, Extension
+from setuptools import setup, find_packages
+from wheel.bdist_wheel import bdist_wheel
 
-# This dummy extension will force a binary wheel
-dummy_ext = Extension(
-    'lawyer._dummy',
-    sources=['src/lawyer/dummy.c'],
-)
+class BdistWheelCustom(bdist_wheel):
+    def finalize_options(self):
+        bdist_wheel.finalize_options(self)
+        self.root_is_pure = False
+
+        print(self.plat_name, 'hehe')
 
 setup(
-    ext_modules=[dummy_ext],
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
+    package_data={"lawyer": ["*.so", "*.pyd", "*.dylib"]},
+    include_package_data=True,
+    # Forces platform-specific wheel
+    options={
+        "bdist_wheel": {
+            "universal": False,
+            "py_limited_api": False,
+        }
+    },
+    cmdclass={
+        'bdist_wheel': BdistWheelCustom,
+    },
 )

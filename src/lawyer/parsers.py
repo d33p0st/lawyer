@@ -818,6 +818,9 @@ class singlets:
         # where A, B, D are singlet and (C, a, b) is a singlets object with C as its name.
         # Returns: (rA, rB, rC, rD), where r<anything> is result.
 
+        if self.parent is not None and not self.parent.__ispresent__:
+            raise ParseError(f"{self.name}'s parent {self.parent.name} is not used.")
+
 
         if order:
             values = []

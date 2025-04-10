@@ -443,14 +443,26 @@ class Judge:
             return values
 
 
-    def _get_full_usage_of_singlets_object(self, obj):
-        usage = ''
+    def _get_full_usage_of_singlets_object(self, obj, starter):
+        usage = starter or ''
+        strings = []
+        terminal_width = shutil.get_terminal_size().columns - 10 - len(self.__application__) - 1
+
+
         for name, _obj in obj.collection.items():
             if isinstance(_obj, singlet):
-                usage += _obj.__usage__
+                if len(usage + _obj.__usage__) > terminal_width:
+                    strings.append(usage)
+                    usage = _obj.__usage__
+                else:
+                    usage += _obj.__usage__
             else:
-                self._get_full_usage_of_singlets_object(_obj)
-        return usage
+                strings.extend(self._get_full_usage_of_singlets_object(_obj, usage))
+                usage = strings.pop()
+        
+        if usage:
+            strings.append(usage)
+        return strings
 
 
     def show_helptext(self, exit, exit_code=0) -> typing.NoReturn:
@@ -466,15 +478,13 @@ class Judge:
                     string = _local_usage
                 else:
                     string += _local_usage
+                
             else:
-                _local_usage = self._get_full_usage_of_singlets_object(_object)
-                if len(string + _local_usage) > terminal_width:
-                    usage.append(string)
-                    string = _local_usage
-                else:
-                    string += _local_usage
+                usage.extend(self._get_full_usage_of_singlets_object(_object, string))
+                string = usage.pop()
 
-        usage.append(string)
+        if string:
+            usage.append(string)
 
         
         print(f"\n{self.__application__} v{self.__version__}")

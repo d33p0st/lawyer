@@ -401,6 +401,7 @@ class Judge:
     def parse(self, *order):
         if self.__autohelp__ and self.__help_notations__ and self.__reference__ and self.__reference__[0] in self.__help_notations__:
             self.show_helptext(exit=True)
+
         if order:
 
             values = []
@@ -444,7 +445,7 @@ class Judge:
 
     def _get_full_usage_of_singlets_object(self, obj):
         usage = ''
-        for name, _obj in obj.items():
+        for name, _obj in obj.collection.items():
             if isinstance(_obj, singlet):
                 usage += _obj.__usage__
             else:

@@ -230,6 +230,7 @@ class singlet(typing.Generic[default]):
         self.application_name = application_name
         self.application_version = application_version
         self.application_description = application_description
+        self.__partial__(raise_error=True)
 
 
     # The __helptext__ method is responsible for printing current singlet object's
@@ -432,7 +433,6 @@ class singlet(typing.Generic[default]):
 
     def __parse__(self, *reference, capture_type=None,
                   raise_errors=True) -> typing.Union[bool, str, typing.Tuple[str, ...], default, None]:
-        self.__partial__(raise_error=True)
         if capture_type is None:
             capture_type = self.capture_type
 
